@@ -20,10 +20,15 @@ from pynput.keyboard import Key, Listener
 import pyautogui
 import pywhatkit
 import random
-import smtplib
+# import smtplib
 from playsound import playsound
 from os import path
+from docx import Document
+from docx.shared import Inches
+from openpyxl import Workbook
 
+increase_command = ["nircmd.exe", "changesysvolume", "1000"]
+decrease_command = ["nircmd.exe", "changesysvolume", "-1000"]
 
 
 #print('Tomar bektigoto Sohokari chalu hocche')
@@ -90,7 +95,7 @@ def takeCommand():
 
         try:
             statement=r.recognize_google(audio,language='En-in')
-           # print(f"user said:{statement}\n")
+            print(f"user said:{statement}\n")
 
         except Exception as _:
             speak4 = "Pardon me, please say that again"
@@ -115,17 +120,21 @@ if __name__=='__main__':
             continue
 
         if "thamo" in statement or "bye" in statement or "stop" in statement:
-            speak7 = ('Good bye')
-            translate_To_Bangla(speak7)
+            speak7 = ('Have a good day. Allah hafez')
+            convert_to_aduio_in_Eng(speak7)
             #print('your personal assistant G-one is shutting down,Good bye')
             break
 
 
 
         if 'wikipedia' in statement:
+
+            speak210 = ("What do you want to know?")
+            translate_To_Bangla(speak210)
+            query = takeCommand()
             
-            statement =statement.replace("wikipedia", "")
-            results = wikipedia.summary(statement, sentences=3)
+            #statement =statement.replace("wikipedia", " ")
+            results = wikipedia.summary(query, sentences=3)
             speak8 = ("According to Wikipedia")
             translate_To_Bangla(speak8)
             #print(results)
@@ -163,7 +172,7 @@ if __name__=='__main__':
             time.sleep(5)
 
         elif 'gmail' in statement:
-            webbrowser.open_new_tab("gmail.com")
+            webbrowser.open_new_tab("https://mail.google.com/mail/u/0/#inbox")
             speak13 = "Google Mail open now"
             translate_To_Bangla(speak13)
             time.sleep(5)
@@ -240,6 +249,7 @@ if __name__=='__main__':
             speak17 = ("Here is stackoverflow")
             translate_To_Bangla(speak17
             )
+
         elif 'news' in statement :
             news = webbrowser.open_new_tab("https://www.prothomalo.com/")
             speak18 = ('Here are some headlines from the Prothom Alo')
@@ -296,3 +306,41 @@ if __name__=='__main__':
             translate_To_Bangla(speak22)
             subprocess.call(["shutdown", "/l"])
             time.sleep(3)
+
+        elif "increase" in statement or "barao" in statement or "baraw" in statement:
+            subprocess.run(increase_command, shell=True)
+            print("volume increased by 2 unit")
+        
+        elif "decrease" in statement or "komao" in statement or "komaw" in statement or "kamaw" in statement:
+            subprocess.run(decrease_command, shell=True)
+            print("volume decreased by 2 unit")
+
+        elif "MS Word" in statement or "Microsoft word" in statement or "document" in statement:
+            
+            speak51 = ("Say the heading of the file")
+            translate_To_Bangla(speak51)
+            heading = takeCommand()
+            document = Document()
+            document.add_heading(heading)
+
+            speak52 = ("What to note in the file?")
+            translate_To_Bangla(speak52)
+            note = takeCommand()
+            document.add_paragraph(note)
+
+            speak53 = ("Say the file name")
+            translate_To_Bangla(speak53)
+            docFilename = takeCommand()
+            document.save( docFilename + '.docx')
+
+        elif "excel" in statement:
+            book = Workbook()
+            speak55 = ("Say the file name")
+            translate_To_Bangla(speak55)
+
+            xlsFilename = takeCommand()
+            book.save( xlsFilename + '.xlsx')
+
+
+
+        
