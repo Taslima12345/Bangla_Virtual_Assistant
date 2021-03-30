@@ -28,11 +28,13 @@ for dirc in sorted(os.listdir(path.join (path.dirname(path.abspath(__file__)), '
         temp = np.zeros((1025, 203))
         temp[: D.shape[0], : D.shape[1]] = D
 
-        print("Shape after Padding: ", temp.shape)
+        # print("Shape after Padding: ", temp.shape)
         peak_features.append(temp)
         peak_labels.append(count)
     
-        count += 1  
+    count += 1  
+
+print("done")
 
 peak_features = np.array(peak_features)
 peak_labels = np.array(peak_labels)
