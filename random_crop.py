@@ -1,11 +1,13 @@
 import os 
 import librosa
 import random
-import numpy as np
+
 import soundfile as sf
 # import pydub
 from os import path
 from pydub import AudioSegment
+
+import numpy as np
 
 for subFolder in os.listdir(path.join (path.dirname(path.abspath(__file__)), 'Dataset')):
 
@@ -14,7 +16,7 @@ for subFolder in os.listdir(path.join (path.dirname(path.abspath(__file__)), 'Da
         sound = AudioSegment.from_file(path.join(path.dirname(path.abspath(__file__)), 'Dataset', str(subFolder), str(comm)))
         sound_length = len(sound)
         halfway_point = sound_length // 3 
-        for i in range(10):
+        for i in range(25):
             # print (subFolder, ' ', i)
             start = random.randint(0, halfway_point)
             end = random.randint(0, halfway_point)
@@ -29,4 +31,5 @@ for subFolder in os.listdir(path.join (path.dirname(path.abspath(__file__)), 'Da
 
             sf.write(audio_file_path, data, sr, 'PCM_24')   #version - 8
             #count += 1
-    #print("Done")
+    #
+    print("Done")
