@@ -1,4 +1,3 @@
-from Test_thread import VoiceCommandListener
 import sys
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
@@ -6,7 +5,7 @@ from PyQt5.QtCore import *
 from PyQt5 import QtWidgets, QtGui, QtCore
 import os
 from os import path
-# from Model_backend_thread import VoiceCommandsListener
+from Model_backend_thread import VoiceCommandsListener
 import time
 
 
@@ -23,7 +22,7 @@ class Open_Window(QtWidgets.QWidget):
         self.height = 950
         self.initUI()
         
-        self.backendObj = VoiceCommandListener(self)
+        self.backendObj = VoiceCommandsListener(self)
         self.backendObj.start()
   
     def initUI(self):
